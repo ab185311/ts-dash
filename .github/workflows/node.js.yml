@@ -1,5 +1,4 @@
 name: Node.js CI
-description: Build and test project
 
 on:
   push:
