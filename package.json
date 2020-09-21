@@ -1,0 +1,33 @@
+{
+  "name": "ts-dash",
+  "version": "1.0.0",
+  "description": "TS Dashboard with GCP Firebase and static HTML front end",
+  "main": "dist/app.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node dist/index.js",
+    "dev": "nodemon server/index.ts",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "npm run lint",
+    "build": "tsc -p .",
+    "docker-build": "docker build -t docker-registry-v2.ncredinburgh.com/adambrown/dashboard:1.0-SNAPSHOT .",
+    "docker-push": "docker push docker-registry-v2.ncredinburgh.com/adambrown/dashboard"
+  },
+  "author": "Adam Brown",
+  "license": "",
+  "dependencies": {
+    "@google-cloud/firestore": "^4.2.0",
+    "envalid": "^6.0.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "@types/node": "^13.9.0",
+    "@types/winston": "^2.4.4",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.1.0",
+    "tslint-config-security": "^1.16.0",
+    "typescript": "^3.8.3"
+  }
+}
