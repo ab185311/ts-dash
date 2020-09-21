@@ -4,7 +4,7 @@ steps:
     args: [ "ci" ]
   - name: node:12
     entrypoint: npm
-    args: [ "run", "build" ]
+    args: [ "run", "gcp-build" ]
   - name: "gcr.io/cloud-builders/gcloud"
     args: [ "app", "deploy" ]
 timeout: "1600s"
