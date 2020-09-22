@@ -1,11 +1,11 @@
 import { app } from './app';
 import logger from './util/logger';
-import validateEnv from './util/validateEnv';
-const application = app();
-const { PORT } = validateEnv();
 
-const server = application.listen(PORT, async () => {
-    logger.info(`Application started. Listening on port: ${PORT}`);
+const port = process.env.PORT || 8080;
+const application = app();
+
+const server = application.listen(port, async () => {
+    logger.info(`Application started. Listening on port: ${port}`);
 });
 
 // graceful shutdown handler
