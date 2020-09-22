@@ -1,7 +1,6 @@
 import { app } from './app';
 import logger from './util/logger';
 import validateEnv from './util/validateEnv';
-
 const application = app();
 const { PORT } = validateEnv();
 

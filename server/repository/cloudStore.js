@@ -1,15 +1,19 @@
 import firestore from '@google-cloud/firestore';
 import logger from '../util/logger';
-import validateEnv from '../util/validateEnv';
 
-const { KEY_FILE, PROJECT_ID } = validateEnv();
+const { KEY_FILE, GOOGLE_CLOUD_PROJECT } = process.env;
+
+const firestoreOptions =
+    process.env.NODE_ENV === 'production'
+        ? { projectId: GOOGLE_CLOUD_PROJECT }
+        : {
+              projectId: GOOGLE_CLOUD_PROJECT,
+              keyFilename: KEY_FILE,
+          };
 
 export class CloudStore {
     static COLLECTION = 'menus';
-    static firestore = new firestore.Firestore({
-        projectId: PROJECT_ID,
-        keyFilename: KEY_FILE,
-    });
+    static firestore = new firestore.Firestore(firestoreOptions);
 
     static async updateMenu(menu, tenantId) {
         logger.debug(menu);

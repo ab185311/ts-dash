@@ -1,14 +1,17 @@
 import winston from 'winston';
-// Imports the Google Cloud client library for Winston
 import gcWinston from '@google-cloud/logging-winston';
-import validateEnv from './validateEnv';
 
-const { KEY_FILE, PROJECT_ID } = validateEnv();
+const { KEY_FILE, GOOGLE_CLOUD_PROJECT } = process.env;
 
-const loggingWinston = new gcWinston.LoggingWinston({
-    projectId: PROJECT_ID,
-    keyFilename: KEY_FILE,
-});
+const winstonOptions =
+    process.env.NODE_ENV === 'production'
+        ? {}
+        : {
+              keyFilename: KEY_FILE,
+              projectId: GOOGLE_CLOUD_PROJECT,
+          };
+
+const loggingWinston = new gcWinston.LoggingWinston(winstonOptions);
 
 // Create a Winston logger that streams to Stackdriver Logging
 // Logs will be written to: "projects/YOUR_PROJECT_ID/logs/winston_log"
