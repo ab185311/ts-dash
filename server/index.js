@@ -1,9 +1,9 @@
-import app from './app';
+import { app } from './app';
 import logger from './util/logger';
-import validateEnv from "./util/validateEnv";
+import validateEnv from './util/validateEnv';
 
 const application = app();
-const {PORT} = validateEnv();
+const { PORT } = validateEnv();
 
 const server = application.listen(PORT, async () => {
     logger.info(`Application started. Listening on port: ${PORT}`);
