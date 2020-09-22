@@ -1,19 +1,23 @@
 import winston from 'winston';
-import path from 'path';
+// Imports the Google Cloud client library for Winston
+import gcWinston from '@google-cloud/logging-winston';
+import validateEnv from './validateEnv';
 
+const { KEY_FILE, PROJECT_ID } = validateEnv();
+
+const loggingWinston = new gcWinston.LoggingWinston({
+    projectId: PROJECT_ID,
+    keyFilename: KEY_FILE,
+});
+
+// Create a Winston logger that streams to Stackdriver Logging
+// Logs will be written to: "projects/YOUR_PROJECT_ID/logs/winston_log"
 const logger = winston.createLogger({
     level: 'info',
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-    ),
     transports: [
         new winston.transports.Console(),
-        new winston.transports.File({
-            filename: path.join('log', 'dashboard.log'),
-            maxsize: 1024,
-            maxFiles: 10,
-        }),
+        // Add Stackdriver Logging
+        loggingWinston,
     ],
 });
 export default logger;
