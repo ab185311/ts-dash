@@ -6,7 +6,7 @@ const menuPath = '/menu';
 
 menuRouter.get(menuPath, async (request, response) => {
     try {
-        const menus = await getMenu(request.tenantId);
+        const menus = await getMenu(request.headers['x-tenant-id']);
         response.send(menus);
     } catch (e) {
         response.status(500).send(e.message);
@@ -15,8 +15,7 @@ menuRouter.get(menuPath, async (request, response) => {
 menuRouter.post(menuPath, async (request, response) => {
     try {
         const menuItems = request.body;
-        // @ts-ignore
-        await updateMenu(menuItems, request.tenantId);
+        await updateMenu(menuItems, request.headers['x-tenant-id']);
         response.send(menuItems);
     } catch (e) {
         response.status(500).send(e.message);

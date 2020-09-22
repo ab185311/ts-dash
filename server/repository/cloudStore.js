@@ -11,11 +11,11 @@ export class CloudStore {
         keyFilename: KEY_FILE,
     });
 
-    static async updateMenu(menu) {
+    static async updateMenu(menu, tenantId) {
         logger.debug(menu);
         const menusRef = this.firestore
             .collection(this.COLLECTION)
-            .doc(menu.tenantId);
+            .doc(tenantId);
         await menusRef.set(Object.assign({}, menu));
     }
 
